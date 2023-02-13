@@ -1,0 +1,28 @@
+.information {
+  width: 20vw;
+  max-width: 300px;
+  min-width: 400px;
+  height: 250px;
+  margin: 20px 30px 20px 30px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  padding: 0;
+}
+
+.title {
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: larger;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}

@@ -1,0 +1,61 @@
+<div id="mouse-position"></div>
+<div id="map" class="map" (change)="mapChangedCenterPosition()">
+  <!-- <app-popup type="map" ></app-popup> -->
+  <!--     [map]=this.map [visibilityPopupWindow]="this.visibilityPopupWindow" (updatedVisibility)="updateVisibilityPopupWindow($event)" -->
+  <div class="map-toolbar">
+    <mat-form-field class="my-select">
+      <mat-select
+        placeholder="Layer"
+        class="layer-select"
+        #s
+        (change)="onChangeLayers(s.value)"
+      >
+        <mat-option value="OSM" selected>OSM</mat-option>
+        <mat-option value="States">Show US States</mat-option>
+        <mat-option value="Raster">Raster</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="measurment">
+      <mat-select placeholder="Measure" id="type">
+        <mat-option value="length">Length (LineString)</mat-option>
+        <mat-option value="area">Area (Polygon)</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="download-buttons">
+      <button
+        mat-button
+        color="primary"
+        class="export-png"
+        (click)="downloadPngMap(this.map)"
+        cdkFocusInitial
+      >
+        Download PNG
+      </button>
+      <button
+        mat-button
+        color="primary"
+        class="export-pdf"
+        (click)="toggleWindowDownloadPdf()"
+        cdkFocusInitial
+      >
+        Download PDF
+      </button>
+    </div>
+  </div>
+</div>
+<!-- <button (click)="zoomOut()">Zoom Out</button>
+<button (click)="zoomIn()">Zoom In</button>
+<form class="row">
+    <div class="col-auto">
+      <div class="input-group">
+        <label for="country-area" class="input-group-text">Show european countries larger than</label>
+        <select id="country-area" class="form-select">
+          <option value="0" default>0 ㎢</option>
+          <option value="5000">5000 ㎢</option>
+          <option value="10000">10000 ㎢</option>
+          <option value="50000">50000 ㎢</option>
+          <option value="100000">100000 ㎢</option>
+        </select>
+      </div>
+    </div>
+  </form> -->

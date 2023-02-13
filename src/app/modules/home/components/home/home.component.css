@@ -1,0 +1,32 @@
+.main {
+    font-family: Montserrat;
+}
+
+/* .product-app {                                                                                                                                                                     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+} */
+
+h4 {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+ .information-app {                                                                                                                                                                  
+    background-color: rgb(184, 149, 216);
+    
+    display: flex;
+    justify-content: center;
+    margin: 20px 20px 20px 20px;
+    /*
+    align-items: center;
+    margin-right: 50px;
+    padding: 10px 10px 10px 10px; */
+} 
+
+.information-app:nth-child(odd){
+    background-color: bisque;
+}

@@ -1,0 +1,109 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+}
+
+/* .row {
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+.row {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.ol-zoom .ol-zoom-out {
+  margin-top: 210px;
+}
+
+.map .ol-zoomslider {
+  background-color: transparent;
+  /*
+    Zoom control top: 0.5em
+    Zoom control padding: 2px
+    Zoom in button margin top: 1px
+    Zoom in button height: font size 1.14em * 1.375 height
+    */
+  top: calc(0.5em + 2px + 1px + 1.14 * 1.375em);
+}
+.ol-zoomslider {
+  top: 2.25em;
+}
+.export-png {
+  background-color: white;
+}
+
+.export-pdf {
+  background-color: white;
+}
+
+.ol-touch .ol-zoom .ol-zoom-out {
+  margin-top: 212px;
+}
+
+.ol-touch .ol-zoomslider {
+  top: 2.8em;
+}
+
+.ol-zoom-in.ol-has-tooltip:hover [role="tooltip"],
+.ol-zoom-in.ol-has-tooltip:focus [role="tooltip"] {
+  top: 3px;
+}
+
+.ol-zoom-out.ol-has-tooltip:hover [role="tooltip"],
+.ol-zoom-out.ol-has-tooltip:focus [role="tooltip"] {
+  top: 232px;
+}
+
+.custom-mouse-position {
+  position: absolute;
+  background-color: white;
+  top: 10px;
+  z-index: 1;
+  left: 50px;
+  padding: 1px 1px 1px 1px;
+  border-radius: 5px;
+}
+
+.measurment {
+  background-color: white;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  height: 0;
+}

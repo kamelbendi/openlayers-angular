@@ -1,0 +1,38 @@
+p {
+  padding: 0 20px 0 20px;
+  position: relative;
+  float: left;
+  font-weight: bold;
+}
+
+p:hover {
+  color: #0091c9;
+}
+
+.header {
+  padding: 10px 20px 10px 20px;
+  display: block;
+}
+
+@media only screen and (min-width: 500px) {
+  .links {
+    position: relative;
+    float: right;
+    display: block;
+    cursor: pointer;
+  }
+  .phone-links {
+    display: none;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .links {
+    display: none;
+  }
+  .phone-links {
+    display: block;
+    position: relative;
+    float: right;
+    padding-top: 15px;
+  }
+}
