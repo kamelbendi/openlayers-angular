@@ -19,3 +19,12 @@
   width: 100%;
 }
 
+.list-collaborator-popup {
+  display: grid;
+  width: 592px;
+}
+
+.add-collaborator-popup {
+  display: grid;
+  width: 592px;
+}

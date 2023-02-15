@@ -71,6 +71,7 @@ export class CollaboratorService {
 
   /** POST: add a new hero to the server */
   addCollaborator(collaborator: Collaborator): Observable<Collaborator> {
+    
     return this.http
       .post<Collaborator>(this.collaboratorsUrl, collaborator, this.httpOptions)
       .pipe(

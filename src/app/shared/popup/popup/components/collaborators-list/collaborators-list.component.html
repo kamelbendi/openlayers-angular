@@ -1,11 +1,24 @@
 <h4>Our current collaborators :</h4>
-<button mat-button (click)="onNoClick()">Cancel</button>
-<button
-  mat-button
-  color="primary"
-  (click)="toggleAddCollaboratorPopup()"
-  cdkFocusInitial
->
-  Add Collaborator
-</button>
+<div class="list">
+    <mat-list role="list" *ngFor="let collaborator of collaborators">
+        <div class="list-item">
+            <mat-list-item role="listitem" >{{collaborator.name}}</mat-list-item>
+            <button mat-button (click)="delete(collaborator)">X</button>
+
+        </div>
+      </mat-list>
+</div>
+
+<div class="buttons">
+
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button
+      mat-button
+      color="primary"
+      (click)="toggleAddCollaboratorPopup()"
+      cdkFocusInitial
+    >
+      Add a Collaborator
+    </button>
+</div>
 

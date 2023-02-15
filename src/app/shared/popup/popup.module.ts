@@ -14,6 +14,7 @@ import { InMemoryDataService } from 'src/app/in-memory-data.service';
 import { AddCollaboratorComponent } from './popup/components/add-collaborator/add-collaborator.component';
 import { CollaboratorsListComponent } from './popup/components/collaborators-list/collaborators-list.component';
 import { DownloadPdfMapComponent } from './popup/components/download-pdf-map/download-pdf-map.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [PopupComponent, AddCollaboratorComponent, CollaboratorsListComponent, DownloadPdfMapComponent],
@@ -24,6 +25,7 @@ import { DownloadPdfMapComponent } from './popup/components/download-pdf-map/dow
     MatSelectModule,
     MatFormFieldModule,
     FormsModule,
+    MatListModule,
     BrowserModule,
     HttpClientModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

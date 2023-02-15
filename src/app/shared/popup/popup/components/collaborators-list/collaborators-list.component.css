@@ -1,0 +1,18 @@
+.list {
+    overflow-y: scroll;
+  
+  
+  bottom:0px;
+ left:0px;
+    height: 350px;
+    max-height: 350px;
+}
+
+.list-item {
+    display: flex;
+    justify-items: center;
+}
+
+.buttons {
+    display: flex;
+}

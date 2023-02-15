@@ -25,19 +25,19 @@ export class AddCollaboratorComponent implements OnInit {
     //this.newCollaborator.id = this.inMemoryService.genId(this.)
   }
 
-  add(name: string): void {
-    name = name.trim();
-    if (!name) {
+  add(newCollaborator: Collaborator): void {
+    newCollaborator.name = newCollaborator.name.trim();
+    if (!newCollaborator.name) {
       return;
     }
     this.collaboratorService
-      .addCollaborator({ name } as Collaborator)
+      .addCollaborator(newCollaborator)
       .subscribe((collaborator) => {
         //this.collaborators.push(collaborator);
       });
   }
   addCollaborator() {
-
+    
   }
   onNoClick(): void {
     this.dialogRef.close();
