@@ -10,6 +10,7 @@ import { PopupComponent } from 'src/app/shared/popup/popup/popup.component';
 import { products } from 'src/app/modules/home/components/mock/products';
 import { information } from 'src/app/modules/home/components/mock/information';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

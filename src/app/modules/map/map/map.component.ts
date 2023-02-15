@@ -146,7 +146,6 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     if (!this.map) {
       this.createMap();
-      console.log(this.map);
     } else {
       console.log('ng init with an existing ma is running');
     }
@@ -224,6 +223,12 @@ export class MapComponent implements OnInit {
     map.renderSync();
   };
 
+  toggleWindowShowCollaboratos(): void {
+    const dialogRef = this.dialog.open(PopupComponent, {
+      data: { type: 'collaborators' },
+    });
+  }
+
   toggleWindowDownloadPdf(): void {
     const mapData = this.map;
     const dialogRef = this.dialog.open(PopupComponent, {
@@ -296,9 +301,6 @@ export class MapComponent implements OnInit {
     }
   }
 
-  mapChangedCenterPosition() {
-    console.log(this.map.getView().getCenter());
-  }
 
   addMeasurmentLinePolygon(source: any, map: Map) {
     this.map.on('pointermove', this.pointerMoveHandler);

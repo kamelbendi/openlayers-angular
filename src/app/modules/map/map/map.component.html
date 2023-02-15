@@ -1,5 +1,5 @@
 <div id="mouse-position"></div>
-<div id="map" class="map" (change)="mapChangedCenterPosition()">
+<div id="map" class="map">
   <!-- <app-popup type="map" ></app-popup> -->
   <!--     [map]=this.map [visibilityPopupWindow]="this.visibilityPopupWindow" (updatedVisibility)="updateVisibilityPopupWindow($event)" -->
   <div class="map-toolbar">
@@ -39,6 +39,15 @@
         cdkFocusInitial
       >
         Download PDF
+      </button>
+      <button
+        mat-button
+        color="primary"
+        class="export-png"
+        (click)="toggleWindowShowCollaboratos()"
+        cdkFocusInitial
+      >
+        ShowCollaborators
       </button>
     </div>
   </div>

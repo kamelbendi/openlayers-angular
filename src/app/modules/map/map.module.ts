@@ -7,6 +7,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [MapComponent],
   exports: [MapComponent],
-  imports: [CommonModule, PopupModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, PopupModule],
 })
 export class MapModule {}

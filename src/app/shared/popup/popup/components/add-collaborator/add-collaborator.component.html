@@ -1,0 +1,17 @@
+<h2>New collaborator's info :</h2>
+<input matInput [(ngModel)]="newCollaborator.name" placeholder="What's the name of the institute?" />
+<input
+  matInput
+  [(ngModel)]="newCollaborator.longitude"
+  placeholder="What's the longitude?"
+/>
+<input
+  matInput
+  [(ngModel)]="newCollaborator.latitude"
+  placeholder="What's the latitude?"
+/>
+
+<button mat-button (click)="onNoClick()">Cancel</button>
+<button mat-button color="primary" (click)="addCollaborator()" cdkFocusInitial>
+  Add
+</button>
