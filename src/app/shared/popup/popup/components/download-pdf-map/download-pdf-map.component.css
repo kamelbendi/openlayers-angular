@@ -1,0 +1,23 @@
+#map-to-print {
+    height: 420px;
+    max-width: 592px;
+    width: 100%;
+    min-width: 400px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .map-toolbar {
+    display: flex;
+    justify-self: center;
+  }
+
+  .map-container {
+    max-width: 592px;
+    width: 100%;
+  }
+
+  .mat-mdc-dialog-actions {
+    justify-content: end;
+  }
+  

@@ -1,0 +1,48 @@
+<div class="map-toolbar">
+  <div class="select-options">
+    <mat-form-field class="dowloadPdf">
+      <mat-select [(value)]="selectedMapPdfOptions.value">
+        <mat-option
+          *ngFor="let paperDetail of paperDetails"
+          [value]="paperDetail.value"
+          >{{ paperDetail.text }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field>
+      <mat-select
+        class="dowloadPdf"
+        [(value)]="selectedMapPdfOptions.resolution"
+      >
+        <mat-option
+          *ngFor="let dpiResolution of dpiResolutions"
+          [value]="dpiResolution.value"
+          >{{ dpiResolution.text }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field> -->
+  </div>
+  <div mat-dialog-actions class="action-buttons">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button
+      mat-button
+      color="primary"
+      (click)="downloadPdfMap(this.feature)"
+      cdkFocusInitial
+    >
+      Download
+    </button>
+  </div>
+</div>
+<div id="map-container" class="map-container">
+  <div id="map-to-print" class="map-to-print"></div>
+  <!-- <aol-map [width]="'600px'" [height]="'400px'">
+            <aol-view [zoom]="data.map.getView().getZoom() || 2" [rotation]="data.map.getView().getRotation() || 0.5" [maxZoom]="data.map.getView().getMaxZoom() || 18">
+                <aol-coordinate [x]="21" [y]="52" [srid]="'EPSG:4326'"></aol-coordinate>  [x]="data.map.getView().getCenter()[0] || 21" [y]="data.map.getView().getCenter()[1] || 52"
+            </aol-view>
+            <aol-layer-tile>
+                <aol-source-osm></aol-source-osm>
+            </aol-layer-tile>
+        </aol-map> -->
+</div>

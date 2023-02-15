@@ -1,20 +1,8 @@
-.mat-mdc-dialog-actions {
-  justify-content: end;
-}
 
-#map-to-print {
-  height: 420px;
-  max-width: 592px;
-  width: 100%;
-  min-width: 400px;
-  padding: 0;
-  margin: 0;
-}
 
-.map-container {
-  max-width: 592px;
-  width: 100%;
-}
+
+
+
 
 .map-popup {
   display: grid;
@@ -31,7 +19,3 @@
   width: 100%;
 }
 
-.map-toolbar {
-  display: flex;
-  justify-self: center;
-}
