@@ -10,6 +10,6 @@ import { PopupModule } from 'src/app/shared/popup/popup.module';
   declarations: [HomeComponent, ProductComponent, InformationComponent],
   imports: [CommonModule, RouterModule, PopupModule],
   exports: [HomeComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  
 })
 export class HomeModule {}

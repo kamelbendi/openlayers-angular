@@ -1,9 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { MapModule } from './modules/map/map.module';
-import { AppModule } from 'src/app/app.module';
-import { HomeModule } from './modules/home/home.module';
-import { ContactModule } from './modules/contact/contact.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -21,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have as title 'hyperview-app'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('hyperview-app');
+    expect(app.title).toEqual("hyperview-app");
   });
 
   it('should render title', () => {
