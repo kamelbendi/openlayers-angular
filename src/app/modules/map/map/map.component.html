@@ -6,10 +6,7 @@
     <mat-form-field class="my-select">
       <mat-select
         placeholder="Layer"
-        class="layer-select"
-        #s
-        (change)="onChangeLayers(s.value)"
-      >
+        class="layer-select" #s (change)="onChangeLayers(s.value)">
         <mat-option value="OSM" selected>OSM</mat-option>
         <mat-option value="States">Show US States</mat-option>
         <mat-option value="Raster">Raster</mat-option>
@@ -52,6 +49,7 @@
     </div>
   </div>
 </div>
+
 <!-- <button (click)="zoomOut()">Zoom Out</button>
 <button (click)="zoomIn()">Zoom In</button>
 <form class="row">

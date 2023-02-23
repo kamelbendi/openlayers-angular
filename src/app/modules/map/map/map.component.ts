@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OSM } from 'ol/source';
-import { Image as ImageLayer, Tile as TileLayer } from 'ol/layer.js';
+import { Image as ImageLayer, Tile as TileLayer, Vector } from 'ol/layer.js';
 import { defaults as defaultControls } from 'ol/control.js';
 import { fromLonLat } from 'ol/proj';
 import View from 'ol/View.js';
@@ -22,17 +22,18 @@ import ImageWMS from 'ol/source/ImageWMS.js';
 import Draw from 'ol/interaction/Draw.js';
 import Overlay from 'ol/Overlay.js';
 import { Circle as CircleStyle, Stroke } from 'ol/style.js';
-import { LineString, Polygon } from 'ol/geom.js';
+import { LineString, Point, Polygon } from 'ol/geom.js';
 import { Vector as VectorLayer } from 'ol/layer.js';
 import { getArea, getLength } from 'ol/sphere.js';
 import { unByKey } from 'ol/Observable.js';
 import { Size } from 'ol/size';
 import {
   MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { PopupComponent } from 'src/app/shared/popup/popup/popup.component';
+import { Feature } from 'ol';
+import { Collaborator } from 'src/app/shared/popup/popup/models/collaborator.model';
+import { CollaboratorService } from 'src/app/shared/services/collaborator.service';
 
 let sketch: any;
 
@@ -78,6 +79,7 @@ const continueLineMsg: string = 'Click to continue drawing the line';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit {
+  
   zoom = 5;
   styles = ['OSM', 'States', 'Raster', 'Vector'];
   source: VectorSource = new VectorSource();
@@ -87,7 +89,7 @@ export class MapComponent implements OnInit {
     style: {
       'fill-color': 'rgba(255, 255, 255, 0.2)',
       'stroke-color': '#ffcc33',
-      'stroke-width': 2,
+      'stroke-width': 5,
       'circle-radius': 7,
       'circle-fill-color': '#ffcc33',
     },
@@ -97,6 +99,9 @@ export class MapComponent implements OnInit {
   hillshadeSource = new XYZ({
     url: this.hillshadeURL,
   });
+  markerFeatures: any = [];
+    sourceMarker = new VectorSource({ features: this.markerFeatures });
+   layer = new VectorLayer({ source: this.sourceMarker, visible: true });
   layers = [
     new TileLayer({
       visible: true,
@@ -104,7 +109,7 @@ export class MapComponent implements OnInit {
     }),
     new ImageLayer({
       extent: [-13884991, 2870341, -7455066, 6338219],
-      visible: false,
+      visible: true,
       source: new ImageWMS({
         url: 'https://ahocevar.com/geoserver/wms',
         params: { LAYERS: 'topp:states' },
@@ -118,6 +123,7 @@ export class MapComponent implements OnInit {
       opacity: 0.5,
     }),
     this.vector,
+    this.layer,
   ];
   extent = [485869.5728, 76443.1884, 837076.5648, 299941.7864];
   style = new Style({
@@ -137,20 +143,36 @@ export class MapComponent implements OnInit {
     className: 'custom-mouse-position',
     target: document.getElementById('mouse-position') || undefined,
   });
+   
 
+  collaborators: Collaborator[] = [];
   //visibilityPopupWindow: boolean = false;
 
   public map!: Map;
-  constructor(public dialog: MatDialog, private _ngZone: NgZone) {}
+  constructor(public dialog: MatDialog, private collaboratorService: CollaboratorService) {}
 
   ngOnInit(): void {
     if (!this.map) {
+      console.log("init")
       this.createMap();
     } else {
       console.log('ng init with an existing ma is running');
     }
     setTimeout(() => {}, 0);
     this.addMeasurmentLinePolygon(this.source, this.map);
+  }
+  ngAfterInit() {
+    this.collaboratorService.getCollaborators().subscribe((collaborators) => (this.collaborators = collaborators));
+     this.collaborators.map(collaborator => {
+      console.log(collaborator)
+      this.markerFeatures.push(new Feature({
+        geometry: new Point(collaborator.position),
+      }))
+    }) 
+  }
+
+  ngOnChanges() {
+    console.log("this.layer")
   }
 
   downloadPngMap = function (map: Map): any {
@@ -261,7 +283,12 @@ export class MapComponent implements OnInit {
     helpTooltipElement.classList.remove('hidden');
   };
 
-  createMap() {
+   createMap() {
+    
+    //console.log(this.markerFeatures)
+    
+    //var marker = new OpenLayers.Marker(lonLat1, icon1);
+
     this.map = new Map({
       controls: defaultControls().extend([
         new ZoomSlider(),
@@ -276,31 +303,38 @@ export class MapComponent implements OnInit {
         rotation: 0.5,
       }),
     });
+    //this.map.addLayer(layer);
   }
 
   onChangeLayers(event: any) {
+    console.log(event)
     this.layers.map((layer) => layer.setVisible(false));
     switch (event) {
       case 'States': {
         this.layers[1].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[0].setVisible(true);
+        this.layers[4].setVisible(true);
         break;
       }
       case 'Raster': {
         this.layers[2].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[0].setVisible(true);
+        this.layers[4].setVisible(true);
         break;
       }
       case 'OSM': {
         this.layers[0].setVisible(true);
         this.layers[3].setVisible(true);
+        this.layers[4].setVisible(true);
         break;
       }
+      default:
+        this.layers[0].setVisible(true);
+      break;
     }
   }
-
 
   addMeasurmentLinePolygon(source: any, map: Map) {
     this.map.on('pointermove', this.pointerMoveHandler);

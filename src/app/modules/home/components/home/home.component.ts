@@ -33,7 +33,9 @@ export class HomeComponent {
       data: { type: 'welcome' },
     });
   }
+  
   goToMap(): void {
     this.router.navigate([ROUTER_LINKS.map]);
   }
+
 }

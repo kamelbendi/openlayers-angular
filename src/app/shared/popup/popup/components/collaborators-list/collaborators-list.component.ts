@@ -16,7 +16,6 @@ export class CollaboratorsListComponent implements OnInit{
     public dialogRef: MatDialogRef<PopupComponent>,
     private collaboratorService: CollaboratorService) {}
 
-
   ngOnInit(): void {
     this.getCollaborators();
   }
@@ -26,14 +25,17 @@ export class CollaboratorsListComponent implements OnInit{
       .getCollaborators()
       .subscribe((collaborators) => (this.collaborators = collaborators));
   }
+
   delete(collaborator: Collaborator): void {
     this.collaborators = this.collaborators.filter((h) => h !== collaborator);
     this.collaboratorService.deleteCollaborator(collaborator.id).subscribe();
   }
+
   toggleAddCollaboratorPopup(): void {
     const dialogRef = this.dialog.open(PopupComponent, {
       data: { type: 'add-collaborator' },
     });
+    this.dialogRef.close();
   }
 
   onNoClick(): void {

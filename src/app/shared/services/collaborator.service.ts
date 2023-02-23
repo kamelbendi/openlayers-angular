@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { MessageService } from 'src/app/messages.service';
+import { MessagesService } from 'src/app/messages.service';
 import { Collaborator } from 'src/app/shared/popup/popup/models/collaborator.model';
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +16,7 @@ export class CollaboratorService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messagesService: MessagesService
   ) {}
 
   /** GET heroes from the server */
@@ -124,6 +124,6 @@ export class CollaboratorService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`CollaboratorService: ${message}`);
+    this.messagesService.add(`CollaboratorService: ${message}`);
   }
 }

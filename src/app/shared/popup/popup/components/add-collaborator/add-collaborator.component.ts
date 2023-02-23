@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { InMemoryDataService } from 'src/app/in-memory-data.service';
 import { CollaboratorService } from 'src/app/shared/services/collaborator.service';
 import { Collaborator } from '../../models/collaborator.model';
@@ -12,32 +12,42 @@ import { PopupComponent } from '../../popup.component';
 })
 export class AddCollaboratorComponent implements OnInit {
   newCollaborator: Collaborator;
-
+  collaborators: Collaborator[] = [];
   constructor(
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<PopupComponent>,
     private collaboratorService: CollaboratorService,
     private inMemoryService: InMemoryDataService) {
-      this.newCollaborator = {id: 0, longitude: 0, latitude: 0, name: ""}
+      this.newCollaborator = {id: 0, position: [0, 0], name: ""}
     }
     //@Input() collaborators: Collaborator[];
     
     ngOnInit(): void {
     //this.newCollaborator.id = this.inMemoryService.genId(this.)
   }
+  ngOnChanges(): void {
+    console.log(this.collaborators)
+  }
 
   add(newCollaborator: Collaborator): void {
+    console.log(newCollaborator);
     newCollaborator.name = newCollaborator.name.trim();
     if (!newCollaborator.name) {
       return;
     }
     this.collaboratorService
       .addCollaborator(newCollaborator)
-      .subscribe((collaborator) => {
-        //this.collaborators.push(collaborator);
-      });
+      .subscribe();
+
+    const dialogRef = this.dialog.open(PopupComponent, {
+      data: { type: 'collaborators' },
+    });
   }
-  addCollaborator() {
-    
+  addCollaborator(newCollaborator: Collaborator) {
+    this.collaboratorService.getCollaborators().subscribe((collaborators) => (this.collaborators = collaborators));
+    this.newCollaborator.id = this.inMemoryService.genId(this.collaborators);
+    this.add(newCollaborator)
+    this.dialogRef.close();
   }
   onNoClick(): void {
     this.dialogRef.close();
