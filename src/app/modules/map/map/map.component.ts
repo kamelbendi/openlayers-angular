@@ -8,7 +8,7 @@ import {
 import { OSM } from 'ol/source';
 import { Image as ImageLayer, Tile as TileLayer, Vector } from 'ol/layer.js';
 import { defaults as defaultControls } from 'ol/control.js';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, transformExtent } from 'ol/proj';
 import View from 'ol/View.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import MousePosition from 'ol/control/MousePosition.js';
@@ -34,6 +34,7 @@ import { PopupComponent } from 'src/app/shared/popup/popup/popup.component';
 import { Feature } from 'ol';
 import { Collaborator } from 'src/app/shared/popup/popup/models/collaborator.model';
 import { CollaboratorService } from 'src/app/shared/services/collaborator.service';
+import { boundingExtent } from 'ol/extent';
 
 let sketch: any;
 
@@ -171,10 +172,6 @@ export class MapComponent implements OnInit {
     }) 
   }
 
-  ngOnChanges() {
-    console.log("this.layer")
-  }
-
   downloadPngMap = function (map: Map): any {
     const mapCanvas = document.createElement('canvas');
 
@@ -284,7 +281,8 @@ export class MapComponent implements OnInit {
   };
 
    createMap() {
-    
+    var maxExtent = [-20037508, -20037508, 20037508, 20037508];
+    //var restrictedExtent = maxExtent.clone();
     //console.log(this.markerFeatures)
     
     //var marker = new OpenLayers.Marker(lonLat1, icon1);
@@ -294,13 +292,18 @@ export class MapComponent implements OnInit {
         new ZoomSlider(),
         this.mousePositionControl,
       ]),
+      
       layers: this.layers,
       target: 'map',
       view: new View({
+        extent: transformExtent(maxExtent, 'EPSG:3857', 'EPSG:900913'),
+        projection : 'EPSG:900913',
         center: fromLonLat([21, 52.23]),
         zoom: this.zoom,
         maxZoom: 18,
+        minZoom: 2,
         rotation: 0.5,
+        
       }),
     });
     //this.map.addLayer(layer);
