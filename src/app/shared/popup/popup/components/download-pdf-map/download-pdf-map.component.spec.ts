@@ -1,53 +1,56 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/compiler';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DownloadPdfMapComponent } from './download-pdf-map.component';
 import {
-  MatDialog,
   MatDialogModule,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { PdfService } from 'src/app/shared/services/pdf.service';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { MatFormField } from '@angular/material/form-field';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { PopupComponent } from '../../popup.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('DownloadPdfMapComponent', () => {
   let component: DownloadPdfMapComponent;
   let fixture: ComponentFixture<DownloadPdfMapComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [DownloadPdfMapComponent, MatFormField, MatSelect],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [DownloadPdfMapComponent, PopupComponent],
       providers: [
         PdfService,
         {
           provide: MatDialogRef,
-          useValue: {},
+          useValue: [],
         },
         {
           provide: MAT_DIALOG_DATA,
           useValue: [],
         },
       ],
-      imports: [MatDialogModule, HttpClientTestingModule, MatSelectModule],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        MatDialogModule,
+        MatSelectModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+      ],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
-  }));
+  });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(DownloadPdfMapComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

@@ -7,7 +7,7 @@ import { OSM } from 'ol/source';
 import { PdfService } from 'src/app/shared/services/pdf.service';
 import { PopupComponent } from '../../popup.component';
 import { defaults as defaultControls } from 'ol/control.js';
-import { View } from 'ol';
+import { Feature, View } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import WKT from 'ol/format/WKT';
 
@@ -16,7 +16,7 @@ import WKT from 'ol/format/WKT';
   templateUrl: './download-pdf-map.component.html',
   styleUrls: ['./download-pdf-map.component.css'],
 })
-export class DownloadPdfMapComponent implements OnInit {
+export class DownloadPdfMapComponent {
   margin: number = 10;
   public mapToPrint!: Map;
   pdfMake = require('pdfmake/build/pdfmake.js');
@@ -36,7 +36,6 @@ export class DownloadPdfMapComponent implements OnInit {
     value: 'a4',
     resolution: 72,
   };
-  viewResolution: any;
 
   /* dpiResolutions = [
     { value: 72, text: '72 dpi (fast)' },
@@ -45,7 +44,7 @@ export class DownloadPdfMapComponent implements OnInit {
   ]; */
 
   format = new WKT();
-  feature = this.format.readFeature(
+  feature: Feature = this.format.readFeature(
     'POLYGON((10.689697265625 -25.0927734375, 34.595947265625 ' +
       '-20.1708984375, 38.814697265625 -35.6396484375, 13.502197265625 ' +
       '-39.1552734375, 10.689697265625 -25.0927734375))'
@@ -62,18 +61,21 @@ export class DownloadPdfMapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.generateMapToPrint(
-      this.data.zoom,
-      this.data.center,
-      this.data.maxZoom
-    );
+    (this.data.zoom && this.data.center && this.data.maxZoom ? 
+      this.generateMapToPrint(
+        this.data.zoom,
+        this.data.center,
+        this.data.maxZoom
+      ) : 0
+      )
+
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  generateMapToPrint(zoom: number, position: number[], maxZoom: number) {
+  generateMapToPrint(zoom: number, center: number[], maxZoom: number): void {
     this.mapToPrint = new Map({
       controls: defaultControls().extend([new ZoomSlider()]),
       layers: [
@@ -84,26 +86,25 @@ export class DownloadPdfMapComponent implements OnInit {
       ],
       target: 'map-to-print',
       view: new View({
-        center: fromLonLat(position, 'EPSG:4326'),
+        center: fromLonLat(center, 'EPSG:4326'),
         zoom: zoom,
         maxZoom: maxZoom,
       }),
     });
   }
 
-  downloadPdfMap(feature: any) {
+  downloadPdfMap(feature: Feature): void {
     this.selectedMapPdfOptions.dimentions = this.paperDetails.find(
       (obj) => obj.value === this.selectedMapPdfOptions.value
     )?.dimentions || [0, 0];
-    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    
+    feature.getGeometry()?.transform('EPSG:4326', 'EPSG:3857');
     document.body.style.cursor = 'progress';
-    console.log(this.selectedMapPdfOptions);
     var docDefinition = this.pdfService.downloadPdf(
       this.selectedMapPdfOptions,
-      this.margin
+      this.margin,
     ); // use of service
     document.body.style.cursor = 'auto';
-    console.log(docDefinition);
     this.pdfMake.createPdf(docDefinition).open();
   }
 }

@@ -95,7 +95,7 @@ export class MapComponent implements OnInit {
       'circle-fill-color': '#ffcc33',
     },
   });
-  hillshadeURL =
+  hillshadeURL: string =
     'https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}';
   hillshadeSource = new XYZ({
     url: this.hillshadeURL,
@@ -165,7 +165,6 @@ export class MapComponent implements OnInit {
   ngAfterInit() {
     this.collaboratorService.getCollaborators().subscribe((collaborators) => (this.collaborators = collaborators));
      this.collaborators.map(collaborator => {
-      console.log(collaborator)
       this.markerFeatures.push(new Feature({
         geometry: new Point(collaborator.position),
       }))
@@ -250,6 +249,7 @@ export class MapComponent implements OnInit {
 
   toggleWindowDownloadPdf(): void {
     const mapData = this.map;
+    console.log(mapData.getView().getCenter())
     const dialogRef = this.dialog.open(PopupComponent, {
       data: { type: 'map', map: mapData, zoom: mapData.getView().getZoom(), center: mapData.getView().getCenter(), maxZoom: mapData.getView().getMaxZoom() },
     });

@@ -22,27 +22,4 @@ export class PopupComponent {
   ) {
     
   }
-
-  ngAfterViewInit() {
-    
-  }
-
-  
-
-
-
- /*  onNoClick(): void {
-    this.dialogRef.close();
-  } */
-
-  /* downloadPdfMap(feature: any) {
-    this.selectedMapPdfOptions.dimentions = this.paperDetails.find(
-      (obj) => obj.value === this.selectedMapPdfOptions.value
-    )?.dimentions || [0, 0];
-    feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-    document.body.style.cursor = 'progress';
-    var docDefinition = this.pdfService.downloadPdf(this.selectedMapPdfOptions); // use of service
-    document.body.style.cursor = 'auto';
-    this.pdfMake.createPdf(docDefinition).open();
-  } */
 }

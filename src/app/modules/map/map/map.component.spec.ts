@@ -8,7 +8,11 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { CollaboratorService } from 'src/app/shared/services/collaborator.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,12 +25,19 @@ describe('MapComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MapComponent],
-      providers: [{
-        provide: MatDialogRef,
-        useValue: {}
-      },],
-
-      imports: [MatDialogModule, HttpClientTestingModule, MatFormFieldModule, MatSelectModule, BrowserAnimationsModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {},
+        },
+      ],
+      imports: [
+        MatDialogModule,
+        HttpClientTestingModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        BrowserAnimationsModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapComponent);

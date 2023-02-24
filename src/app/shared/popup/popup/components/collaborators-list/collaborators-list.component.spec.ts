@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/compiler';
 import {
   MatDialog,
   MatDialogModule,
@@ -28,6 +29,7 @@ describe('CollaboratorsListComponent', () => {
           useValue: {},
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
       imports: [MatDialogModule, HttpClientTestingModule],
     }).compileComponents();
 
