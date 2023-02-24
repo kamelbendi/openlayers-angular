@@ -9,7 +9,7 @@
 
   .map-toolbar {
     display: flex;
-    justify-self: center;
+    justify-content: space-between;
   }
 
   .map-container {

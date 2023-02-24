@@ -12,7 +12,7 @@ import {
   styleUrls: ['./popup.component.css'],
 })
 export class PopupComponent {
-  
+  title = 'hyperview-app';
 
   
   constructor(
@@ -26,6 +26,8 @@ export class PopupComponent {
   ngAfterViewInit() {
     
   }
+
+  
 
 
 

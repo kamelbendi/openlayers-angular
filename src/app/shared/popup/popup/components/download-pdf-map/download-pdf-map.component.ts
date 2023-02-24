@@ -11,11 +11,10 @@ import { View } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import WKT from 'ol/format/WKT';
 
-
 @Component({
   selector: 'app-download-pdf-map',
   templateUrl: './download-pdf-map.component.html',
-  styleUrls: ['./download-pdf-map.component.css']
+  styleUrls: ['./download-pdf-map.component.css'],
 })
 export class DownloadPdfMapComponent implements OnInit {
   margin: number = 10;
@@ -51,21 +50,25 @@ export class DownloadPdfMapComponent implements OnInit {
       '-20.1708984375, 38.814697265625 -35.6396484375, 13.502197265625 ' +
       '-39.1552734375, 10.689697265625 -25.0927734375))'
   );
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<PopupComponent>,
-    private pdfService: PdfService,) {
-      this.pdfMake.vfs = this.pdfFonts.pdfMake.vfs;
-      
-      this.viewResolution = this.data.map.getView().getResolution();
-      
-     }
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<PopupComponent>,
+    private pdfService: PdfService
+  ) {
+    this.pdfMake.vfs = this.pdfFonts.pdfMake.vfs;
+
+    //this.viewResolution = this.data.map.getView().getResolution();
+  }
 
   ngOnInit() {
     this.generateMapToPrint(
-      this.data.map.getView().getZoom(),
-      this.data.map.getView().getCenter(),
-      this.data.map.getView().getMaxZoom()
-    )
+      this.data.zoom,
+      this.data.center,
+      this.data.maxZoom
+    );
   }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -86,7 +89,6 @@ export class DownloadPdfMapComponent implements OnInit {
         maxZoom: maxZoom,
       }),
     });
-    
   }
 
   downloadPdfMap(feature: any) {
@@ -95,11 +97,13 @@ export class DownloadPdfMapComponent implements OnInit {
     )?.dimentions || [0, 0];
     feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
     document.body.style.cursor = 'progress';
-    console.log(this.selectedMapPdfOptions)
-    var docDefinition = this.pdfService.downloadPdf(this.selectedMapPdfOptions, this.margin); // use of service
+    console.log(this.selectedMapPdfOptions);
+    var docDefinition = this.pdfService.downloadPdf(
+      this.selectedMapPdfOptions,
+      this.margin
+    ); // use of service
     document.body.style.cursor = 'auto';
-    console.log(docDefinition)
+    console.log(docDefinition);
     this.pdfMake.createPdf(docDefinition).open();
   }
-
 }

@@ -11,9 +11,9 @@ export const ROUTER_LINKS = {
   contact: 'contact-page',
 };
 const routes: Routes = [
-  { path: 'home-page', component: HomeComponent },
-  { path: 'map-page', component: MapComponent },
-  { path: 'contact-page', component: ContactComponent },
+  { path: ROUTER_LINKS.home, component: HomeComponent, title: 'Home' },
+  { path: ROUTER_LINKS.map, component: MapComponent, title: 'Map' },
+  { path: ROUTER_LINKS.contact, component: ContactComponent, title: 'Contact' },
   { path: '', redirectTo: 'home-page', pathMatch: 'full' },
 ];
 

@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title: String = 'hyperview-app';
+  title = "hyperview-app";
   constructor(private titleService: Title, private router: Router) {
     //this.title = 'hyperview-app';
   }
   ngOnInit() {
     //this.title = 'hyperview-app';
-    this.titleService.setTitle("hyperview-app");
+    /* this.titleService.setTitle("hyperview-app"); */
   }
 }

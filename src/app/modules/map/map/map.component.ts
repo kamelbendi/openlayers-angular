@@ -251,7 +251,7 @@ export class MapComponent implements OnInit {
   toggleWindowDownloadPdf(): void {
     const mapData = this.map;
     const dialogRef = this.dialog.open(PopupComponent, {
-      data: { type: 'map', map: mapData },
+      data: { type: 'map', map: mapData, zoom: mapData.getView().getZoom(), center: mapData.getView().getCenter(), maxZoom: mapData.getView().getMaxZoom() },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

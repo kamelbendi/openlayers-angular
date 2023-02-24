@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ROUTER_LINKS } from 'src/app/app-routing.module';
 import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
+  MatDialog
 } from '@angular/material/dialog';
 import { PopupComponent } from 'src/app/shared/popup/popup/popup.component';
 import { products } from 'src/app/modules/home/components/mock/products';
@@ -19,7 +17,7 @@ import { information } from 'src/app/modules/home/components/mock/information';
 export class HomeComponent {
   constructor(private readonly router: Router, public dialog: MatDialog) {}
 
-  products: any = products;
+  products = products;
   information = information;
 
   ngOnInit() {
