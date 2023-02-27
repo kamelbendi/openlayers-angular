@@ -86,7 +86,7 @@ export class MapComponent implements OnInit {
   source: VectorSource = new VectorSource();
   vector = new VectorLayer({
     source: this.source,
-    visible: true,
+    visible: false,
     style: {
       'fill-color': 'rgba(255, 255, 255, 0.2)',
       'stroke-color': '#ffcc33',
@@ -102,7 +102,7 @@ export class MapComponent implements OnInit {
   });
   markerFeatures: any = [];
     sourceMarker = new VectorSource({ features: this.markerFeatures });
-   layer = new VectorLayer({ source: this.sourceMarker, visible: true });
+   layer = new VectorLayer({ source: this.sourceMarker, visible: false });
   layers = [
     new TileLayer({
       visible: true,
@@ -110,7 +110,7 @@ export class MapComponent implements OnInit {
     }),
     new ImageLayer({
       extent: [-13884991, 2870341, -7455066, 6338219],
-      visible: true,
+      visible: false,
       source: new ImageWMS({
         url: 'https://ahocevar.com/geoserver/wms',
         params: { LAYERS: 'topp:states' },
@@ -314,6 +314,7 @@ export class MapComponent implements OnInit {
     this.layers.map((layer) => layer.setVisible(false));
     switch (event) {
       case 'States': {
+        console.log('this is selected')
         this.layers[1].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[0].setVisible(true);
@@ -321,6 +322,8 @@ export class MapComponent implements OnInit {
         break;
       }
       case 'Raster': {
+        console.log('this is selecteddddd')
+
         this.layers[2].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[0].setVisible(true);
@@ -328,6 +331,8 @@ export class MapComponent implements OnInit {
         break;
       }
       case 'OSM': {
+        console.log('this is ')
+
         this.layers[0].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[4].setVisible(true);

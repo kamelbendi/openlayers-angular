@@ -8,7 +8,6 @@ import { InMemoryDataService } from 'src/app/in-memory-data.service';
 import { CollaboratorService } from 'src/app/shared/services/collaborator.service';
 import {
   HttpClientTestingModule,
-  HttpTestingController,
 } from '@angular/common/http/testing';
 import { AddCollaboratorComponent } from './add-collaborator.component';
 import { FormsModule } from '@angular/forms';

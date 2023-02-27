@@ -37,12 +37,6 @@ export class DownloadPdfMapComponent {
     resolution: 72,
   };
 
-  /* dpiResolutions = [
-    { value: 72, text: '72 dpi (fast)' },
-    { value: 150, text: '150 dpi' },
-    { value: 300, text: '300 dpi (slow)' },
-  ]; */
-
   format = new WKT();
   feature: Feature = this.format.readFeature(
     'POLYGON((10.689697265625 -25.0927734375, 34.595947265625 ' +
