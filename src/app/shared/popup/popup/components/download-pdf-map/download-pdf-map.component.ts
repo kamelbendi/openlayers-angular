@@ -4,18 +4,20 @@ import { ZoomSlider } from 'ol/control';
 import TileLayer from 'ol/layer/Tile';
 import Map from 'ol/Map.js';
 import { OSM } from 'ol/source';
-import { PdfService } from 'src/app/shared/services/pdf.service';
+import { PdfService } from 'src/app/shared/services/pdf/pdf.service';
 import { PopupComponent } from '../../popup.component';
 import { defaults as defaultControls } from 'ol/control.js';
 import { Feature, View } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import WKT from 'ol/format/WKT';
+import { MapConstants } from 'src/app/modules/map/MapConstants.enum';
 
 @Component({
   selector: 'app-download-pdf-map',
   templateUrl: './download-pdf-map.component.html',
   styleUrls: ['./download-pdf-map.component.css'],
 })
+
 export class DownloadPdfMapComponent {
   margin: number = 10;
   public mapToPrint!: Map;
@@ -34,7 +36,6 @@ export class DownloadPdfMapComponent {
   selectedMapPdfOptions = {
     dimentions: [297, 210],
     value: 'a4',
-    resolution: 72,
   };
 
   format = new WKT();
@@ -50,7 +51,7 @@ export class DownloadPdfMapComponent {
     private pdfService: PdfService
   ) {
     this.pdfMake.vfs = this.pdfFonts.pdfMake.vfs;
-
+    
     //this.viewResolution = this.data.map.getView().getResolution();
   }
 
@@ -80,7 +81,7 @@ export class DownloadPdfMapComponent {
       ],
       target: 'map-to-print',
       view: new View({
-        center: fromLonLat(center, 'EPSG:4326'),
+        center: fromLonLat(center, MapConstants.epsg4326),
         zoom: zoom,
         maxZoom: maxZoom,
       }),
@@ -92,7 +93,7 @@ export class DownloadPdfMapComponent {
       (obj) => obj.value === this.selectedMapPdfOptions.value
     )?.dimentions || [0, 0];
     
-    feature.getGeometry()?.transform('EPSG:4326', 'EPSG:3857');
+    feature.getGeometry()?.transform(MapConstants.epsg4326, MapConstants.epsg3857);
     document.body.style.cursor = 'progress';
     var docDefinition = this.pdfService.downloadPdf(
       this.selectedMapPdfOptions,
