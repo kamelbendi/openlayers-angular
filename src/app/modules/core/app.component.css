@@ -1,0 +1,27 @@
+.app {
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.app-footer {
+  background-color: #457b9d;
+  /* padding: 20px 40px 20px 40px; */
+  margin-top: auto;
+  text-align: center;
+  height: 90px;
+}
+
+.app-header {
+  height: 90px;
+}
+
+
+@media only screen and (min-width: 500px) {
+}
+
+@media only screen and (max-width: 500px) {
+}

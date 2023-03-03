@@ -6,16 +6,18 @@
     <mat-form-field class="my-select">
       <mat-select
         placeholder="Layer"
-        class="layer-select" #s (change)="onChangeLayers(s.value)">
+        class="layer-select"
+        (valueChange)="onChangeLayers($event)"
+        >
         <mat-option value="OSM" selected>OSM</mat-option>
         <mat-option value="States">Show US States</mat-option>
         <mat-option value="Raster">Raster</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="measurment">
-      <mat-select placeholder="Measure" id="type">
-        <mat-option value="length">Length (LineString)</mat-option>
-        <mat-option value="area">Area (Polygon)</mat-option>
+      <mat-select placeholder="Measure" [(value)]="drawingType.drawingType">
+        <mat-option [value]="MapConstants.lengthMeasure">Length (LineString)</mat-option>
+        <mat-option [value]="MapConstants.areaMeasure">Area (Polygon)</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="download-buttons">
