@@ -11,9 +11,9 @@ export class PdfService {
   constructor() {}
 
   downloadPdf(selectedMapPdfOptions: any, margin: number) {
-    const width = Math.round((selectedMapPdfOptions.dimentions[0] * 72) / 25.4);
+    const width = Math.round((selectedMapPdfOptions.dimentions[0] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH);
     const height = Math.round(
-      (selectedMapPdfOptions.dimentions[1] * 72) / 25.4
+      (selectedMapPdfOptions.dimentions[1] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH
     );
     //viewResolution = this.data.map.getView().getResolution();
     var img = new Image();
@@ -63,10 +63,10 @@ export class PdfService {
         {
           image: img.src,
           width:
-            Math.round((selectedMapPdfOptions.dimentions[0] * 72) / 25.4) -
+            Math.round((selectedMapPdfOptions.dimentions[0] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH) -
             2 * margin,
           height:
-            Math.round((selectedMapPdfOptions.dimentions[1] * 72) / 25.4) -
+            Math.round((selectedMapPdfOptions.dimentions[1] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH) -
             2 * margin,
         },
       ],

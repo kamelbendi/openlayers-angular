@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { CollaboratorService } from 'src/app/shared/services/collaborator.service';
+import { CollaboratorService } from 'src/app/shared/services/collaborator/collaborator.service';
 import { Collaborator } from '../../models/collaborator.model';
 import { PopupComponent } from '../../popup.component';
 

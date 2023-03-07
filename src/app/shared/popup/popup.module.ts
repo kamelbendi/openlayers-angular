@@ -15,15 +15,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { PdfService } from '../services/pdf.service';
 import { PopupComponent } from './popup/popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from 'src/app/in-memory-data.service';
 import { AddCollaboratorComponent } from './popup/components/add-collaborator/add-collaborator.component';
 import { CollaboratorsListComponent } from './popup/components/collaborators-list/collaborators-list.component';
 import { DownloadPdfMapComponent } from './popup/components/download-pdf-map/download-pdf-map.component';
 import { MatListModule } from '@angular/material/list';
+import { InMemoryDataService } from '../services/inMemoryData/in-memory-data.service';
+import { PdfService } from '../services/pdf/pdf.service';
 
 @NgModule({
   declarations: [
