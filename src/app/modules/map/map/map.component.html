@@ -15,7 +15,7 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="measurment">
-      <mat-select placeholder="Measure" [(value)]="drawingType.drawingType">
+      <mat-select placeholder="Measure" (valueChange)="onChangeDrawingType($event)">
         <mat-option [value]="MapConstants.lengthMeasure">Length (LineString)</mat-option>
         <mat-option [value]="MapConstants.areaMeasure">Area (Polygon)</mat-option>
       </mat-select>

@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { Observable as ObservableRx} from 'rxjs';
 import { OSM } from 'ol/source';
 import { Image as ImageLayer, Tile as TileLayer, Vector } from 'ol/layer.js';
 import { defaults as defaultControls } from 'ol/control.js';
@@ -23,16 +24,16 @@ import XYZ from 'ol/source/XYZ.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import { LineString, Point, Polygon } from 'ol/geom.js';
 import { Vector as VectorLayer } from 'ol/layer.js';
-import { Size } from 'ol/size';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from 'src/app/shared/popup/popup/popup.component';
-import { Feature } from 'ol';
+import { Feature, Observable } from 'ol';
 import { Collaborator } from 'src/app/shared/popup/popup/models/collaborator.model';
 import { CollaboratorService } from 'src/app/shared/services/collaborator/collaborator.service';
-import { Measure } from './measure';
-import { Subject, Subscription } from 'rxjs';
 import { MapConstants } from '../MapConstants.enum';
 import { PngService } from '../service/png/png.service';
+import { MapState } from '../reducers/map.reducers';
+import { Store } from '@ngrx/store';
+import { changeDrawingType } from '../actions';
 
 @Component({
   selector: 'app-map',
@@ -61,7 +62,11 @@ export class MapComponent implements OnInit {
 
   markerFeatures: any = [];
   sourceMarker = new VectorSource({ features: this.markerFeatures });
-  collaboratorsMarkerLayer = new VectorLayer({ source: this.sourceMarker, visible: false });
+  collaboratorsMarkerLayer = new VectorLayer({
+    source: this.sourceMarker,
+    visible: false,
+    
+  });
   layers = [
     new TileLayer({
       visible: true,
@@ -80,9 +85,11 @@ export class MapComponent implements OnInit {
     new TileLayer({
       source: new XYZ({
         url: MapConstants.hillshadeURL,
+        crossOrigin: '*',
       }),
       visible: false,
       opacity: 0.5,
+      
     }),
     this.Measurmentsvector,
     this.collaboratorsMarkerLayer,
@@ -111,23 +118,27 @@ export class MapComponent implements OnInit {
   //visibilityPopupWindow: boolean = false;
 
   public map!: Map;
-  drawingType = new Measure('length', this.map, this.source);
+  //drawingType = new Measure('length', this.map, this.source);
+  drawType$: ObservableRx<string>;
   constructor(
+    public store: Store<MapState>,
     public dialog: MatDialog,
     private pngService: PngService,
-    private collaboratorService: CollaboratorService,
+    private collaboratorService: CollaboratorService
   ) {
-    
+    this.drawType$ = store.select('drawType');
   }
 
   ngOnInit(): void {
     if (!this.map) {
+      console.log(this.drawType$)
       this.createMap();
     } else {
       console.log('ng init with an existing ma is running');
     }
     setTimeout(() => {}, 0);
-    this.drawingType.addMeasurmentLinePolygon();
+    //this.drawingType.addMeasurmentLinePolygon();
+    this.addMeasurmentLinePolygon();
   }
 
   ngAfterInit() {
@@ -135,7 +146,7 @@ export class MapComponent implements OnInit {
       .getCollaborators()
       .takeUntil(this.yewf)
       .subscribe((collaborators) => (this.collaborators = collaborators)); */
-      this.collaboratorService
+    this.collaboratorService
       .getCollaborators()
       .subscribe((collaborators) => (this.collaborators = collaborators));
     this.collaborators.map((collaborator) => {
@@ -147,9 +158,17 @@ export class MapComponent implements OnInit {
     });
   }
 
-  downloadPngMap (map: Map): any {
-     this.pngService.downLoadPng(map);
-  };
+  ngOnChanges() {
+    console.log(this.drawType$)
+  }
+
+  addMeasurmentLinePolygon() {
+
+  }
+
+  downloadPngMap(map: Map): void {
+    this.pngService.downLoadPng(map);
+  }
 
   toggleWindowShowCollaboratos(): void {
     const dialogRef = this.dialog.open(PopupComponent, {
@@ -194,7 +213,7 @@ export class MapComponent implements OnInit {
         extent: transformExtent(
           maxExtent,
           MapConstants.epsg3857,
-          MapConstants.epsg900913,
+          MapConstants.epsg900913
         ),
         projection: MapConstants.epsg900913,
         center: fromLonLat([21, 52.23]),
@@ -205,6 +224,20 @@ export class MapComponent implements OnInit {
       }),
     });
     //this.map.addLayer(layer);
+  }
+
+  onChangeDrawingType(event: string) {
+    switch(event) {
+      case MapConstants.areaMeasure: 
+
+        //this.store.dispatch(changeDrawingType.toLineString());
+      break;
+      case MapConstants.lengthMeasure:
+        this.store.dispatch(changeDrawingType.toPolygon());
+      break;
+      default:
+        return;
+    }
   }
 
   onChangeLayers(event: string) {
@@ -235,11 +268,4 @@ export class MapComponent implements OnInit {
         break;
     }
   }
-
-  /* m() {
-    this.tw?.unsubscribe();
-
-    this.yewf.next();
-    // this.yewf.comlepte()
-  } */
 }
