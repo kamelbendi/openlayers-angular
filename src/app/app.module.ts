@@ -15,8 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { MAP_STORE } from './reducers';
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { mapReducer } from './modules/map/reducers/map.reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { changeTypeReducer, drawReducer } from './modules/map/reducers/map.reducers';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +32,7 @@ import { mapReducer } from './modules/map/reducers/map.reducers';
     MatDialogModule,
     HttpClientModule,
     MatButtonModule,
-    StoreModule.forRoot({ game : mapReducer}),
+    StoreModule.forRoot({ draw: drawReducer, drawType: changeTypeReducer }),
     StoreDevtoolsModule.instrument({}),
   ],
   providers: [],

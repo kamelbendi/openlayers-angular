@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { PngService } from './service/png/png.service';
-import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [MapComponent],
@@ -29,7 +28,6 @@ import { StoreModule } from '@ngrx/store';
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    StoreModule.forFeature({ mapFeatureKey, mapReducer }),
   ],
   providers: [PngService],
 })
