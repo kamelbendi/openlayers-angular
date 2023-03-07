@@ -66,11 +66,14 @@ export class MapComponent implements OnInit {
     source: this.sourceMarker,
     visible: false,
     
+    
   });
   layers = [
     new TileLayer({
       visible: true,
-      source: new OSM(),
+      source: new OSM({
+        crossOrigin: '*',
+      }),
     }),
     new ImageLayer({
       extent: [-13884991, 2870341, -7455066, 6338219],
@@ -80,6 +83,7 @@ export class MapComponent implements OnInit {
         params: { LAYERS: 'topp:states' },
         ratio: 1,
         serverType: 'geoserver',
+        crossOrigin: '*',
       }),
     }),
     new TileLayer({

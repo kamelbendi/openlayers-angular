@@ -11,11 +11,16 @@ export class PdfService {
   constructor() {}
 
   downloadPdf(selectedMapPdfOptions: any, margin: number) {
-    const width = Math.round((selectedMapPdfOptions.dimentions[0] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH);
+    const width = Math.round(
+      (selectedMapPdfOptions.dimentions[0] * POINTS_IN_INCH) /
+        MILLIMETERS_IN_INCH
+    );
     const height = Math.round(
-      (selectedMapPdfOptions.dimentions[1] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH
+      (selectedMapPdfOptions.dimentions[1] * POINTS_IN_INCH) /
+        MILLIMETERS_IN_INCH
     );
     //viewResolution = this.data.map.getView().getResolution();
+
     var img = new Image();
     img.setAttribute('crossOrigin', 'anonymous');
     const mapCanvas = document.createElement('canvas');
@@ -63,10 +68,16 @@ export class PdfService {
         {
           image: img.src,
           width:
-            Math.round((selectedMapPdfOptions.dimentions[0] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH) -
+            Math.round(
+              (selectedMapPdfOptions.dimentions[0] * POINTS_IN_INCH) /
+                MILLIMETERS_IN_INCH
+            ) -
             2 * margin,
           height:
-            Math.round((selectedMapPdfOptions.dimentions[1] * POINTS_IN_INCH) / MILLIMETERS_IN_INCH) -
+            Math.round(
+              (selectedMapPdfOptions.dimentions[1] * POINTS_IN_INCH) /
+                MILLIMETERS_IN_INCH
+            ) -
             2 * margin,
         },
       ],
