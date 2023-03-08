@@ -1,24 +1,25 @@
-import Draw from "ol/interaction/Draw";
+import Draw from 'ol/interaction/Draw';
 import { createReducer, on } from '@ngrx/store';
-import VectorSource from "ol/source/Vector";
-import { Fill, Stroke, Style } from "ol/style";
-import CircleStyle from "ol/style/Circle";
-import { changeDrawingType, draw } from "../actions";
-import { MapConstants } from "../MapConstants.enum";
+import VectorSource from 'ol/source/Vector';
+import { Fill, Stroke, Style } from 'ol/style';
+import CircleStyle from 'ol/style/Circle';
+import { changeDrawingType, changeSelectedLayer, draw } from '../actions';
+import { MapConstants } from '../MapConstants.enum';
 //import { drawLineString, drawPolygon } from "../actions/draw.actions";
+import { createFormGroupState, FormGroupState } from 'ngrx-forms';
+import { SELECTED_LAYERS_OPTIONS } from '../model/map.model';
 
 export const ADD_INTERACTION = 'add interaction';
 
 export interface MapState {
   draw: any;
-  drawType: string,
+  drawingType: string;
+  selectedLayer: string;
 }
 
-export const mapFeatureKey: string = 'map';
-
-
-const initialState: MapState = {
-
+export const initialInputState = {
+  drawType: 'LineString',
+  selectedLayer: 'OSM',
   draw: new Draw({
     source: new VectorSource(),
     type: 'LineString',
@@ -42,41 +43,39 @@ const initialState: MapState = {
       }),
     }),
   }),
-  drawType: 'LineString',
 };
 
 export const drawReducer = createReducer(
-    initialState,
-    on(draw.lineString, (state) => ({ ...state})),
-    on(draw.polygon, (state) => ({ ...state})),
-    //on(addDrawingAction.linestring, state => ({ ...state, away: state.away + 1})),
+  initialInputState,
+  on(draw.lineString, (state) => ({ ...state })),
+  on(draw.polygon, (state) => ({ ...state }))
+  //on(addDrawingAction.linestring, state => ({ ...state, away: state.away + 1})),
 );
 
 export const changeTypeReducer = createReducer(
-  initialState,
-  on(changeDrawingType.toLineString, (state) => ({ ...state, drawType: MapConstants.lengthMeasure.toString()})),
-  on(changeDrawingType.toPolygon, (state) => ({ ...state, drawType: MapConstants.areaMeasure.toString()})),
-)
-
-
-/* export function addInteraction(initialState: any, action: any) {
-    switch (action.type){
-        case ADD_INTERACTION:
-            return [...initialState, action.payload];
-        default:
-            return initialState;
-        }
-} */
-
-
-
-/* export const reducer = createReducer(
-  initialState,
-  on(LayoutActions.closeSidenav, () => ({ showSidenav: false })),
-  on(LayoutActions.openSidenav, () => ({ showSidenav: true })),
-  on(AuthActions.logoutConfirmation, () => ({ showSidenav: false })),
+  initialInputState,
+  on(changeDrawingType.toLineString, (state) => ({
+    ...state,
+    drawType: MapConstants.lengthMeasure.toString(),
+  })),
+  on(changeDrawingType.toPolygon, (state) => ({
+    ...state,
+    drawType: MapConstants.areaMeasure.toString(),
+  }))
 );
 
-export const selectShowSidenav = (state: State) => state.draw;
- */
-
+export const changeLayerReducer = createReducer(
+  initialInputState,
+  on(changeSelectedLayer.toOSM, (state) => ({
+    ...state,
+    selectedLayer: SELECTED_LAYERS_OPTIONS.osm,
+  })),
+  on(changeSelectedLayer.toRaster, (state) => ({
+    ...state,
+    selectedLayer: SELECTED_LAYERS_OPTIONS.raster,
+  })),
+  on(changeSelectedLayer.toUSA, (state) => ({
+    ...state,
+    selectedLayer: SELECTED_LAYERS_OPTIONS.states,
+  }))
+);

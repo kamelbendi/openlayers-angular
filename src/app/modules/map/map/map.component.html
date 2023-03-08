@@ -7,17 +7,26 @@
       <mat-select
         placeholder="Layer"
         class="layer-select"
+        [(value)]="selectedLayer$"
         (valueChange)="onChangeLayers($event)"
+      >
+        <mat-option [value]="SELECTED_LAYERS_OPTIONS.osm" selected
+          >OSM</mat-option
         >
-        <mat-option value="OSM" selected>OSM</mat-option>
-        <mat-option value="States">Show US States</mat-option>
-        <mat-option value="Raster">Raster</mat-option>
+        <mat-option [value]="SELECTED_LAYERS_OPTIONS.states"
+          >Show US States</mat-option
+        >
+        <mat-option [value]="SELECTED_LAYERS_OPTIONS.raster">Raster</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="measurment">
-      <mat-select placeholder="Measure" (valueChange)="onChangeDrawingType($event)">
-        <mat-option [value]="MapConstants.lengthMeasure">Length (LineString)</mat-option>
-        <mat-option [value]="MapConstants.areaMeasure">Area (Polygon)</mat-option>
+      <mat-select placeholder="Measure" [(value)]="drawingType$">
+        <mat-option [value]="MapConstants.lengthMeasure"
+          >Length (LineString)</mat-option
+        >
+        <mat-option [value]="MapConstants.areaMeasure"
+          >Area (Polygon)</mat-option
+        >
       </mat-select>
     </mat-form-field>
     <div class="download-buttons">

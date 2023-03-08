@@ -13,6 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { PngService } from './service/png/png.service';
+import { NgrxFormsModule, NgrxSelectOption } from 'ngrx-forms';
+import { StoreModule } from '@ngrx/store';
+import { changeLayerReducer, changeTypeReducer } from './reducers/map.reducers';
+import { changeSelectedLayer } from './actions';
 
 @NgModule({
   declarations: [MapComponent],
@@ -24,10 +28,12 @@ import { PngService } from './service/png/png.service';
     PopupModule,
     MatFormFieldModule,
     MatSelectModule,
+    NgrxFormsModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
+    StoreModule.forRoot({ drawingType: changeTypeReducer, selectedLayer: changeLayerReducer}),
   ],
   providers: [PngService],
 })

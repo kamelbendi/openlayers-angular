@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { Observable as ObservableRx} from 'rxjs';
+import { Observable as ObservableRx } from 'rxjs';
 import { OSM } from 'ol/source';
 import { Image as ImageLayer, Tile as TileLayer, Vector } from 'ol/layer.js';
 import { defaults as defaultControls } from 'ol/control.js';
@@ -34,6 +34,7 @@ import { PngService } from '../service/png/png.service';
 import { MapState } from '../reducers/map.reducers';
 import { Store } from '@ngrx/store';
 import { changeDrawingType } from '../actions';
+import { SELECTED_LAYERS_OPTIONS } from '../model/map.model';
 
 @Component({
   selector: 'app-map',
@@ -41,12 +42,8 @@ import { changeDrawingType } from '../actions';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit {
-  /* private tw: Subscription;
-
-  private yewf: Subject = new Subject<void>(); */
-
-  //styles = ['OSM', 'States', 'Raster', 'Vector'];
   public MapConstants = MapConstants;
+  public SELECTED_LAYERS_OPTIONS = SELECTED_LAYERS_OPTIONS;
   source: VectorSource = new VectorSource();
   Measurmentsvector = new VectorLayer({
     source: this.source,
@@ -65,9 +62,8 @@ export class MapComponent implements OnInit {
   collaboratorsMarkerLayer = new VectorLayer({
     source: this.sourceMarker,
     visible: false,
-    
-    
   });
+
   layers = [
     new TileLayer({
       visible: true,
@@ -93,7 +89,6 @@ export class MapComponent implements OnInit {
       }),
       visible: false,
       opacity: 0.5,
-      
     }),
     this.Measurmentsvector,
     this.collaboratorsMarkerLayer,
@@ -122,20 +117,21 @@ export class MapComponent implements OnInit {
   //visibilityPopupWindow: boolean = false;
 
   public map!: Map;
-  //drawingType = new Measure('length', this.map, this.source);
-  drawType$: ObservableRx<string>;
+  drawingType$: ObservableRx<string>;
+  selectedLayer$: ObservableRx<string>;
   constructor(
     public store: Store<MapState>,
     public dialog: MatDialog,
     private pngService: PngService,
     private collaboratorService: CollaboratorService
   ) {
-    this.drawType$ = store.select('drawType');
+    this.drawingType$ = store.select('drawingType');
+    this.selectedLayer$ = store.select('selectedLayer');
   }
 
   ngOnInit(): void {
     if (!this.map) {
-      console.log(this.drawType$)
+      console.log(this.drawingType$);
       this.createMap();
     } else {
       console.log('ng init with an existing ma is running');
@@ -146,10 +142,6 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterInit() {
-    /* this.tw = this.collaboratorService
-      .getCollaborators()
-      .takeUntil(this.yewf)
-      .subscribe((collaborators) => (this.collaborators = collaborators)); */
     this.collaboratorService
       .getCollaborators()
       .subscribe((collaborators) => (this.collaborators = collaborators));
@@ -163,12 +155,10 @@ export class MapComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.drawType$)
+    console.log(this.drawingType$);
   }
 
-  addMeasurmentLinePolygon() {
-
-  }
+  addMeasurmentLinePolygon() {}
 
   downloadPngMap(map: Map): void {
     this.pngService.downLoadPng(map);
@@ -182,7 +172,6 @@ export class MapComponent implements OnInit {
 
   toggleWindowDownloadPdf(): void {
     const mapData = this.map;
-    console.log(mapData.getView().getCenter());
     const dialogRef = this.dialog.open(PopupComponent, {
       data: {
         type: 'map',
@@ -200,11 +189,6 @@ export class MapComponent implements OnInit {
 
   createMap() {
     var maxExtent = [-20037508, -20037508, 20037508, 20037508];
-    //var restrictedExtent = maxExtent.clone();
-    //console.log(this.markerFeatures)
-
-    //var marker = new OpenLayers.Marker(lonLat1, icon1);
-
     this.map = new Map({
       controls: defaultControls().extend([
         new ZoomSlider(),
@@ -227,18 +211,16 @@ export class MapComponent implements OnInit {
         rotation: 0.5,
       }),
     });
-    //this.map.addLayer(layer);
   }
 
   onChangeDrawingType(event: string) {
-    switch(event) {
-      case MapConstants.areaMeasure: 
-
-        //this.store.dispatch(changeDrawingType.toLineString());
-      break;
+    switch (event) {
+      case MapConstants.areaMeasure:
+        this.store.dispatch(changeDrawingType.toLineString());
+        break;
       case MapConstants.lengthMeasure:
         this.store.dispatch(changeDrawingType.toPolygon());
-      break;
+        break;
       default:
         return;
     }
@@ -247,21 +229,21 @@ export class MapComponent implements OnInit {
   onChangeLayers(event: string) {
     this.layers.map((layer) => layer.setVisible(false));
     switch (event) {
-      case 'States': {
+      case SELECTED_LAYERS_OPTIONS.states: {
         this.layers[1].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[0].setVisible(true);
         this.layers[4].setVisible(true);
         break;
       }
-      case 'Raster': {
+      case SELECTED_LAYERS_OPTIONS.raster: {
         this.layers[2].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[0].setVisible(true);
         this.layers[4].setVisible(true);
         break;
       }
-      case 'OSM': {
+      case SELECTED_LAYERS_OPTIONS.osm: {
         this.layers[0].setVisible(true);
         this.layers[3].setVisible(true);
         this.layers[4].setVisible(true);
